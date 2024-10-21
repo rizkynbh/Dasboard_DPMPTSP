@@ -71,23 +71,27 @@ else:
         domain={'x': [0.1, 0.9], 'y': [0.4, 1]},
     ))
 
-    # Bagian bawah: Stacked bar chart
-    stacked_data = filtered_df.groupby('tipe_permohonan').size().reset_index(name='count')
-
-    fig.add_trace(go.Bar(
-        x=stacked_data['tipe_permohonan'],
-        y=stacked_data['count'],
-        name='Jumlah Permohonan',
-        marker_color='blue'
-    ))
-
-    # Mengatur layout untuk stacked bar chart
-    fig.update_layout(
-        title_text='Tipe Permohonan',
-        xaxis_title='Tipe Permohonan',
-        yaxis_title='Jumlah',
-        height=600
-    )
-
-    # Menampilkan figure
+    # Menampilkan figure untuk tipe permohonan
+    fig.update_layout(title_text='Tipe Permohonan')
     fig.show()
+
+    # Membuat figure baru untuk bidang per kecamatan
+    fig_bidang = go.Figure()
+
+    # Bagian bawah: Stacked bar chart untuk Bidang per Kecamatan
+    stacked_data_bidang = filtered_df.groupby(['Kec', 'Bidang_Recode']).size().reset_index(name='count')
+
+    # Menambahkan trace untuk setiap bidang
+    for bidang in stacked_data_bidang['Bidang_Recode'].unique():
+        count = stacked_data_bidang[stacked_data_bidang['Bidang_Recode'] == bidang]['count']
+        kecamatan = stacked_data_bidang[stacked_data_bidang['Bidang_Recode'] == bidang]['Kec']
+        fig_bidang.add_trace(go.Bar(
+            x=kecamatan,
+            y=count,
+            name=bidang,
+            marker_color='orange'  # Ubah warna sesuai kebutuhan
+        ))
+
+
+    # Menampilkan figure bidang per kecamatan
+    fig_bidang.show()
