@@ -2,9 +2,8 @@ import streamlit as st
 import pandas as pd
 
 # Baca data dari file Excel
-file_path = '/Users/macbookair/Desktop/Virtual Pyhton/Data Izin All - DPMPTSP - Dimas.xlsx'
-sheet_name = 'Data Izin All'
-df = pd.read_excel(file_path, sheet_name=sheet_name)
+file_path = 'Data Izin All - DPMPTSP - Dimas.xlsx'
+df = pd.read_excel(file_path, sheet_name='Data Izin All')
 
 st.title("Dashboard Perizinan Investasi di Indonesia")
 st.write("Data Perizinan Investasi Berdasarkan Wilayah")
